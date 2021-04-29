@@ -40,6 +40,13 @@ public class ListAnimalTest {
     }
 
     @BeforeEach
+    public void changeTargetContext(PactVerificationContext context){
+        MockMvcTestTarget testTarget = new MockMvcTestTarget();
+        testTarget.setControllers(animalController);
+        context.setTarget(testTarget);
+    }
+/*
+    @BeforeEach
     void before(PactVerificationContext context) {
         System.setProperty("pact.verifier.publishResults", "true");
         System.setProperty("pact.provider.version", "1.0");
@@ -49,16 +56,19 @@ public class ListAnimalTest {
         context.setTarget(testTarget);
     }
 
+ */
+
     @State("has animals")
-    public void noAnimals() {
+    public void verifyListAnimal() {
         Animal animal = new Animal();
-        animal.setName("Yesid");
-        animal.setGender("Male");
-        animal.setBreed("Bengali");
+        animal.setName("Bigotes");
+        animal.setGender("Siames");
+        animal.setBreed("Male");
         animal.setVaccinated(false);
 
         ArrayList animals = new ArrayList();
         animals.add(animal);
         Mockito.when(animalService.getAll()).thenReturn(animals);
     }
+
 }
